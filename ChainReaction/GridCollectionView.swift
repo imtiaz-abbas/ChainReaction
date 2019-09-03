@@ -42,29 +42,29 @@ class GridCollectionView: UIView, UICollectionViewDataSource, UICollectionViewDe
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 100
+    return 120
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: screenSize.width / 10, height: screenSize.width / 10)
+    return CGSize(width: screenSize.width / 8, height: screenSize.width / 8)
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GridCollectionView", for: indexPath) as! GridItemCollectionViewCell
-    cell.setupView()
+    cell.setupView(indexPath: indexPath)
     return cell
   }
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GridCollectionView", for: indexPath) as! GridItemCollectionViewCell
+    let cell = collectionView.cellForItem(at: indexPath) as! GridItemCollectionViewCell
     cell.didSelect()
   }
   
 }
 
 class GridItemCollectionViewCell: UICollectionViewCell {
-  
-  var balls: Array<UIView> = []
+  var indexPath: Int? = nil
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -74,14 +74,20 @@ class GridItemCollectionViewCell: UICollectionViewCell {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func setupView() {
+  func setupView(indexPath: IndexPath) {
+    self.indexPath = indexPath.row
     self.layer.borderColor = UIColor.white.cgColor
     self.layer.borderWidth = 1
     self.backgroundColor = .black
   }
   
   func didSelect() {
-    
+    var v = UIView()
+    self.sv(v)
+    v.height(26).width(26).centerVertically().centerHorizontally()
+    v.layer.cornerRadius = 13
+    v.layer.masksToBounds = true
+    v.backgroundColor = .yellow
   }
   
 }

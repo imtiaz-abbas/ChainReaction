@@ -162,16 +162,11 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ChainReaction/Pods-ChainReaction-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/SteviaLayout/Stevia.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-ChainReaction/Pods-ChainReaction-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Stevia.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-ChainReaction/Pods-ChainReaction-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
