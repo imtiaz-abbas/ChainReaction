@@ -3,11 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		04D715220AD516814FBDA530 /* Pods_ChainReaction.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00D6A7128B54694CB1D6BD8E /* Pods_ChainReaction.framework */; };
+		69C4F7F9231E942B008548F4 /* ChainReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C4F7F8231E942B008548F4 /* ChainReactionViewModel.swift */; };
+		69C4F7FB231E944F008548F4 /* NodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C4F7FA231E944F008548F4 /* NodeModel.swift */; };
 		B27C9D53230C7C95003D3752 /* GridCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27C9D52230C7C95003D3752 /* GridCollectionView.swift */; };
 		B28A23C1230C79B600D746B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28A23C0230C79B600D746B1 /* AppDelegate.swift */; };
 		B28A23C3230C79B600D746B1 /* HomeScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28A23C2230C79B600D746B1 /* HomeScreenVC.swift */; };
@@ -18,6 +20,8 @@
 /* Begin PBXFileReference section */
 		00D6A7128B54694CB1D6BD8E /* Pods_ChainReaction.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChainReaction.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		41DE8C461B274D30AE58D024 /* Pods-ChainReaction.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChainReaction.release.xcconfig"; path = "Target Support Files/Pods-ChainReaction/Pods-ChainReaction.release.xcconfig"; sourceTree = "<group>"; };
+		69C4F7F8231E942B008548F4 /* ChainReactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainReactionViewModel.swift; sourceTree = "<group>"; };
+		69C4F7FA231E944F008548F4 /* NodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeModel.swift; sourceTree = "<group>"; };
 		95FB6AFAD4EDD246A6F54ACD /* Pods-ChainReaction.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChainReaction.debug.xcconfig"; path = "Target Support Files/Pods-ChainReaction/Pods-ChainReaction.debug.xcconfig"; sourceTree = "<group>"; };
 		B27C9D52230C7C95003D3752 /* GridCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCollectionView.swift; sourceTree = "<group>"; };
 		B28A23BD230C79B600D746B1 /* ChainReaction.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChainReaction.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -48,6 +52,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		69C4F7F7231E93FD008548F4 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				69C4F7F8231E942B008548F4 /* ChainReactionViewModel.swift */,
+				69C4F7FA231E944F008548F4 /* NodeModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		B28A23B4230C79B600D746B1 = {
 			isa = PBXGroup;
 			children = (
@@ -69,6 +82,7 @@
 		B28A23BF230C79B600D746B1 /* ChainReaction */ = {
 			isa = PBXGroup;
 			children = (
+				69C4F7F7231E93FD008548F4 /* ViewModels */,
 				B28A23C0230C79B600D746B1 /* AppDelegate.swift */,
 				B28A23C7230C79B700D746B1 /* Assets.xcassets */,
 				B28A23CC230C79B700D746B1 /* Info.plist */,
@@ -204,7 +218,9 @@
 			files = (
 				B28A23C3230C79B600D746B1 /* HomeScreenVC.swift in Sources */,
 				B28A23C1230C79B600D746B1 /* AppDelegate.swift in Sources */,
+				69C4F7FB231E944F008548F4 /* NodeModel.swift in Sources */,
 				B27C9D53230C7C95003D3752 /* GridCollectionView.swift in Sources */,
+				69C4F7F9231E942B008548F4 /* ChainReactionViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

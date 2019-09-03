@@ -13,8 +13,15 @@ import UIKit
 class GridCollectionView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
   var collectionView: UICollectionView!
   let screenSize = UIScreen.main.bounds
+  var chainReactionViewModel: ChainReactionViewModel? = nil
+  let x = 15
+  let y = 8
   
   func setupView() {
+    
+    chainReactionViewModel = ChainReactionViewModel(x: x, y: y)
+    chainReactionViewModel?.startGame()
+    
     
     let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
     layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -42,7 +49,7 @@ class GridCollectionView: UIView, UICollectionViewDataSource, UICollectionViewDe
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 120
+    return x * y
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -52,20 +59,24 @@ class GridCollectionView: UIView, UICollectionViewDataSource, UICollectionViewDe
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GridCollectionView", for: indexPath) as! GridItemCollectionViewCell
-    cell.setupView(indexPath: indexPath)
+    cell.setupView(node: chainReactionViewModel?.matrix[Int(indexPath.row / y)][indexPath.row % y])
     return cell
   }
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let cell = collectionView.cellForItem(at: indexPath) as! GridItemCollectionViewCell
     cell.didSelect()
+    Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { _ in
+      collectionView.reloadData()
+    }
   }
   
 }
 
 class GridItemCollectionViewCell: UICollectionViewCell {
-  var indexPath: Int? = nil
   
+  var node: Node?
+  var lab = UILabel()
   override init(frame: CGRect) {
     super.init(frame: frame)
   }
@@ -74,20 +85,28 @@ class GridItemCollectionViewCell: UICollectionViewCell {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func setupView(indexPath: IndexPath) {
-    self.indexPath = indexPath.row
+  func setupView(node: Node?) {
+    self.node = node
     self.layer.borderColor = UIColor.white.cgColor
     self.layer.borderWidth = 1
     self.backgroundColor = .black
+    
+    self.sv(lab)
+    lab.text = "\(node!.currentValue)"
+    lab.textAlignment = .center
+    lab.centerVertically().centerHorizontally()
+    lab.textColor = .white
   }
   
   func didSelect() {
-    var v = UIView()
-    self.sv(v)
-    v.height(26).width(26).centerVertically().centerHorizontally()
-    v.layer.cornerRadius = 13
-    v.layer.masksToBounds = true
-    v.backgroundColor = .yellow
+//    let v = UIView()
+//    self.sv(v)
+//    v.height(26).width(26).centerVertically().centerHorizontally()
+//    v.layer.cornerRadius = 13
+//    v.layer.masksToBounds = true
+//    v.backgroundColor = .yellow
+    node?.addOne()
+    lab.text = "\(node!.currentValue)"
   }
   
 }

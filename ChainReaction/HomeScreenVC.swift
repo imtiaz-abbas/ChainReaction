@@ -11,9 +11,9 @@ import UIKit
 class HomeScreenVC: UIViewController {
 
   var gridCollectionView = GridCollectionView()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     self.view.backgroundColor = .white
     self.view.sv(gridCollectionView)
     gridCollectionView.setupView()
