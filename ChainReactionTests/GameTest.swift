@@ -72,6 +72,18 @@ class GameTest: XCTestCase {
     
   }
   
+  func testGameBoardAdjacentNodes() {
+    let sizeX = 4
+    let sizeY = 4
+    let gameBuilder = GameBuilder().with(size: Gameboard(x: sizeX, y: sizeY))
+      .addPlayer(withName: "Player1", color: .red)
+      .addPlayer(withName: "Player2", color: .yellow)
+    let game = gameBuilder.build()
+    
+    game.start()
+    
+  }
+  
   func testGameBoardNodeExplosionDirections() {
     
     let sizeX = 4

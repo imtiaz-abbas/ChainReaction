@@ -87,10 +87,10 @@ class Game {
       for y in 0...maxY-1 {
         let gameNodeIndex = GameNodeIndex(x: x, y: y)
         
-        let top = GameNode(x: x - 1, y: y)
-        let bottom = GameNode(x: x + 1, y: y)
-        let right = GameNode(x: x, y: y + 1)
-        let left = GameNode(x: x, y: y - 1)
+        let top = gameNodes[GameNodeIndex(x: x - 1, y: y)]
+        let bottom = gameNodes[GameNodeIndex(x: x + 1, y: y)]
+        let right = gameNodes[GameNodeIndex(x: x, y: y + 1)]
+        let left = gameNodes[GameNodeIndex(x: x, y: y - 1)]
         
         var directions: Array<Direction> = []
         
@@ -129,17 +129,17 @@ class Game {
           directions.append(.left)
         }
         var nodeList: NodeList = []
-        if (directions.contains(.up)) {
-          nodeList.append(top)
+        if directions.contains(.up) && top != nil {
+          nodeList.append(top!)
         }
-        if directions.contains(.down) {
-          nodeList.append(bottom)
+        if directions.contains(.down) && bottom != nil {
+          nodeList.append(bottom!)
         }
-        if directions.contains(.right) {
-          nodeList.append(right)
+        if directions.contains(.right) && right != nil {
+          nodeList.append(right!)
         }
-        if directions.contains(.left) {
-          nodeList.append(left)
+        if directions.contains(.left) && left != nil {
+          nodeList.append(left!)
         }
         gameNodes[gameNodeIndex] = gameNodes[gameNodeIndex]?.with(directions: directions)
         gameNodeGraph[gameNodeIndex] = nodeList
