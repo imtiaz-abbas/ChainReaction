@@ -34,7 +34,7 @@ class GameTest: XCTestCase {
     XCTAssertEqual(game.gameNodes.count, 16)
   }
   
-  func testGameBoardCornerItemThreshold() {
+  func testGameBoardCornerNodesThreshold() {
     let gameBuilder = GameBuilder().with(size: Gameboard(x: 4, y: 4))
       .addPlayer(withName: "Player1", color: .red)
       .addPlayer(withName: "Player2", color: .yellow)
@@ -46,6 +46,30 @@ class GameTest: XCTestCase {
     XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 3, y: 0)]?.threshold, 1)
     XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 3)]?.threshold, 1)
     XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 3, y: 3)]?.threshold, 1)
+  }
+  
+  func testGameBoardNodesThreshold() {
+    let sizeX = 4
+    let sizeY = 4
+    let gameBuilder = GameBuilder().with(size: Gameboard(x: sizeX, y: sizeY))
+      .addPlayer(withName: "Player1", color: .red)
+      .addPlayer(withName: "Player2", color: .yellow)
+    let game = gameBuilder.build()
+    
+    game.start()
+    
+    for i in 0...sizeX - 1 {
+      for j in 0...sizeY - 1 {
+        if ((i == 0 && j == 0) || (i == 0 && j == sizeY - 1) || (i == sizeX - 1 && j == 0) || (i == sizeX - 1 && j == sizeY - 1)) {
+          XCTAssertEqual(game.gameNodes[GameNodeIndex(x: i, y: j)]?.threshold, 1)
+        } else if (i == 0 || j == 0 || i == sizeX - 1 || j == sizeY - 1) {
+          XCTAssertEqual(game.gameNodes[GameNodeIndex(x: i, y: j)]?.threshold, 2)
+        } else {
+          XCTAssertEqual(game.gameNodes[GameNodeIndex(x: i, y: j)]?.threshold, 3)
+        }
+      }
+    }
+    
   }
   
   func testPerformanceExample() {

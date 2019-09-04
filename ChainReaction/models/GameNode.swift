@@ -34,5 +34,18 @@ struct GameNode {
   var y: Int
   var threshold: Int
   var playerId: Int
-  var currentValue: Int = 0
+  var currentValue: Int
+  
+  init(x: Int, y: Int) {
+    self.x = x
+    self.y = y
+    threshold = 0
+    playerId = 0
+    currentValue = 0
+  }
+  
+  mutating func with(threshold: Int) -> GameNode {
+    self.threshold = threshold
+    return self
+  }
 }

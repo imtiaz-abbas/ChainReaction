@@ -90,38 +90,38 @@ class Game {
         var right: GameNode? = nil
         var left: GameNode? = nil
         if (x > 0 && y > 0 && x < maxX - 1 && y < maxY - 1) {
-          top = GameNode(x: x - 1, y: y, threshold: 0, playerId: 0, currentValue: 0)
-          bottom = GameNode(x: x + 1, y: y, threshold: 0, playerId: 0, currentValue: 0)
-          right = GameNode(x: x, y: y + 1, threshold: 0, playerId: 0, currentValue: 0)
-          left = GameNode(x: x, y: y - 1, threshold: 0, playerId: 0, currentValue: 0)
+          top = GameNode(x: x - 1, y: y)
+          bottom = GameNode(x: x + 1, y: y)
+          right = GameNode(x: x, y: y + 1)
+          left = GameNode(x: x, y: y - 1)
         } else if (x == 0 && y != 0 && y != maxY - 1) {
-          bottom = GameNode(x: x + 1, y: y, threshold: 0, playerId: 0, currentValue: 0)
-          right = GameNode(x: x, y: y + 1, threshold: 0, playerId: 0, currentValue: 0)
-          left = GameNode(x: x, y: y - 1, threshold: 0, playerId: 0, currentValue: 0)
+          bottom = GameNode(x: x + 1, y: y)
+          right = GameNode(x: x, y: y + 1)
+          left = GameNode(x: x, y: y - 1)
         } else if (y == 0 && x != 0 && x != maxX - 1) {
-          top = GameNode(x: x - 1, y: y, threshold: 0, playerId: 0, currentValue: 0)
-          bottom = GameNode(x: x + 1, y: y, threshold: 0, playerId: 0, currentValue: 0)
-          right = GameNode(x: x, y: y + 1, threshold: 0, playerId: 0, currentValue: 0)
+          top = GameNode(x: x - 1, y: y)
+          bottom = GameNode(x: x + 1, y: y)
+          right = GameNode(x: x, y: y + 1)
         } else if(x == maxX - 1 && y != 0 && y != maxY - 1) {
-          top = GameNode(x: x - 1, y: y, threshold: 0, playerId: 0, currentValue: 0)
-          right = GameNode(x: x, y: y + 1, threshold: 0, playerId: 0, currentValue: 0)
-          left = GameNode(x: x, y: y - 1, threshold: 0, playerId: 0, currentValue: 0)
+          top = GameNode(x: x - 1, y: y)
+          right = GameNode(x: x, y: y + 1)
+          left = GameNode(x: x, y: y - 1)
         } else if(y == maxY - 1 && x != 0 && x != maxX - 1) {
-          top = GameNode(x: x - 1, y: y, threshold: 0, playerId: 0, currentValue: 0)
-          bottom = GameNode(x: x + 1, y: y, threshold: 0, playerId: 0, currentValue: 0)
-          left = GameNode(x: x, y: y - 1, threshold: 0, playerId: 0, currentValue: 0)
+          top = GameNode(x: x - 1, y: y)
+          bottom = GameNode(x: x + 1, y: y)
+          left = GameNode(x: x, y: y - 1)
         } else if (x == 0 && y == 0) {
-          bottom = GameNode(x: x + 1, y: y, threshold: 0, playerId: 0, currentValue: 0)
-          right = GameNode(x: x, y: y + 1, threshold: 0, playerId: 0, currentValue: 0)
+          bottom = GameNode(x: x + 1, y: y)
+          right = GameNode(x: x, y: y + 1)
         } else if (x == maxX - 1 && y == maxY - 1) {
-          top = GameNode(x: x - 1, y: y, threshold: 0, playerId: 0, currentValue: 0)
-          left = GameNode(x: x, y: y - 1, threshold: 0, playerId: 0, currentValue: 0)
+          top = GameNode(x: x - 1, y: y)
+          left = GameNode(x: x, y: y - 1)
         } else if (x == maxX - 1 && y == 0) {
-          top = GameNode(x: x - 1, y: y, threshold: 0, playerId: 0, currentValue: 0)
-          right = GameNode(x: x, y: y + 1, threshold: 0, playerId: 0, currentValue: 0)
+          top = GameNode(x: x - 1, y: y)
+          right = GameNode(x: x, y: y + 1)
         } else if (x == 0 && y == maxY - 1) {
-          bottom = GameNode(x: x + 1, y: y, threshold: 0, playerId: 0, currentValue: 0)
-          left = GameNode(x: x, y: y - 1, threshold: 0, playerId: 0, currentValue: 0)
+          bottom = GameNode(x: x + 1, y: y)
+          left = GameNode(x: x, y: y - 1)
         }
         var nodeList: NodeList = []
         if (top != nil) {
@@ -154,7 +154,8 @@ class Game {
         } else {
           t = 3
         }
-        gameNodes[GameNodeIndex(x: i, y: j)] = GameNode(x: i, y: j, threshold: t, playerId: 0, currentValue: 0)
+        var gameNode = GameNode(x: i, y: j)
+        gameNodes[GameNodeIndex(x: i, y: j)] = gameNode.with(threshold: t)
       }
     }
   }
