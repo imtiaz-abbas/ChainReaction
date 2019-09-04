@@ -1,5 +1,5 @@
 //
-//  GridCollectionView.swift
+//  GameView.swift
 //  ChainReaction
 //
 //  Created by imtiaz abbas on 21/08/19.
@@ -10,7 +10,7 @@ import Foundation
 import Stevia
 import UIKit
 
-class GridCollectionView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class GameView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
   var collectionView: UICollectionView!
   let screenSize = UIScreen.main.bounds
   var chainReactionViewModel: ChainReactionViewModel? = nil

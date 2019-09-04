@@ -48,6 +48,10 @@ class ChainReactionViewModel {
     constructAdjacencyList()
   }
   
+  func endGame() {
+    
+  }
+  
   func userSelected(x: Int, y: Int) {
     matrix[x][y].addOne(queue: &explosionQueue)
   }

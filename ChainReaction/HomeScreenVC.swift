@@ -10,14 +10,14 @@ import UIKit
 
 class HomeScreenVC: UIViewController {
 
-  var gridCollectionView = GridCollectionView()
+  var gameView = GameView()
   
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = .white
-    self.view.sv(gridCollectionView)
-    gridCollectionView.setupView()
-    gridCollectionView.fillContainer()
+    self.view.sv(gameView)
+    gameView.setupView()
+    gameView.fillContainer()
   }
 
 }
