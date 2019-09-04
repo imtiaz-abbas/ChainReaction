@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		04D715220AD516814FBDA530 /* Pods_ChainReaction.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00D6A7128B54694CB1D6BD8E /* Pods_ChainReaction.framework */; };
+		692D002E231F7F14004F92A8 /* GameLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692D002D231F7F14004F92A8 /* GameLoop.swift */; };
 		69C4F7F9231E942B008548F4 /* ChainReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C4F7F8231E942B008548F4 /* ChainReactionViewModel.swift */; };
 		69C4F7FB231E944F008548F4 /* NodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C4F7FA231E944F008548F4 /* NodeModel.swift */; };
 		B27C9D53230C7C95003D3752 /* GridCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27C9D52230C7C95003D3752 /* GridCollectionView.swift */; };
@@ -20,6 +21,7 @@
 /* Begin PBXFileReference section */
 		00D6A7128B54694CB1D6BD8E /* Pods_ChainReaction.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChainReaction.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		41DE8C461B274D30AE58D024 /* Pods-ChainReaction.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChainReaction.release.xcconfig"; path = "Target Support Files/Pods-ChainReaction/Pods-ChainReaction.release.xcconfig"; sourceTree = "<group>"; };
+		692D002D231F7F14004F92A8 /* GameLoop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLoop.swift; sourceTree = "<group>"; };
 		69C4F7F8231E942B008548F4 /* ChainReactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainReactionViewModel.swift; sourceTree = "<group>"; };
 		69C4F7FA231E944F008548F4 /* NodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeModel.swift; sourceTree = "<group>"; };
 		95FB6AFAD4EDD246A6F54ACD /* Pods-ChainReaction.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChainReaction.debug.xcconfig"; path = "Target Support Files/Pods-ChainReaction/Pods-ChainReaction.debug.xcconfig"; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 				B28A23C9230C79B700D746B1 /* LaunchScreen.storyboard */,
 				B28A23C2230C79B600D746B1 /* HomeScreenVC.swift */,
 				B27C9D52230C7C95003D3752 /* GridCollectionView.swift */,
+				692D002D231F7F14004F92A8 /* GameLoop.swift */,
 			);
 			path = ChainReaction;
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 				69C4F7FB231E944F008548F4 /* NodeModel.swift in Sources */,
 				B27C9D53230C7C95003D3752 /* GridCollectionView.swift in Sources */,
 				69C4F7F9231E942B008548F4 /* ChainReactionViewModel.swift in Sources */,
+				692D002E231F7F14004F92A8 /* GameLoop.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

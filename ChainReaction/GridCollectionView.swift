@@ -14,13 +14,18 @@ class GridCollectionView: UIView, UICollectionViewDataSource, UICollectionViewDe
   var collectionView: UICollectionView!
   let screenSize = UIScreen.main.bounds
   var chainReactionViewModel: ChainReactionViewModel? = nil
+  var gameLoop: GameLoop?
   let x = 15
   let y = 8
   
   func setupView() {
-    
     chainReactionViewModel = ChainReactionViewModel(x: x, y: y)
     chainReactionViewModel?.startGame()
+    gameLoop = GameLoop(chainReactionViewModel: chainReactionViewModel)
+    gameLoop?.start { (i, j) in
+      let c = self.collectionView.cellForItem(at: IndexPath(row: i * self.y + j, section: 0)) as! GridItemCollectionViewCell
+      c.explode()
+    }
     
     
     let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -103,6 +108,65 @@ class GridItemCollectionViewCell: UICollectionViewCell {
   func didSelect() {
     chainReactionViewModel?.userSelected(x: node!.index.x, y: node!.index.y)
     lab.text = "\(node!.currentValue)"
+  }
+  
+  func explode() {
+    print("========== exploding x: \(node?.index.x) y: \(node?.index.y)")
+    if node?.directions.contains(.up) ?? false {
+      let v = UIView()
+      self.sv(v)
+      v.centerHorizontally().centerVertically().height(16).width(16)
+      v.layer.cornerRadius = 8
+      v.layer.masksToBounds = true
+      v.backgroundColor = .white
+      UIView.animate(withDuration: 0.5, animations: {
+        v.transform = CGAffineTransform(translationX: 0, y: -50)
+      }) { _ in
+        v.removeFromSuperview()
+      }
+    }
+    
+    if node?.directions.contains(.down) ?? false {
+      let v = UIView()
+      self.sv(v)
+      v.centerHorizontally().centerVertically().height(16).width(16)
+      v.layer.cornerRadius = 8
+      v.layer.masksToBounds = true
+      v.backgroundColor = .white
+      
+      UIView.animate(withDuration: 0.5, animations: {
+        v.transform = CGAffineTransform(translationX: 0, y: 50)
+      }) { _ in
+        v.removeFromSuperview()
+      }
+    }
+    if node?.directions.contains(.right) ?? false {
+      let v = UIView()
+      self.sv(v)
+      v.centerHorizontally().centerVertically().height(16).width(16)
+      v.layer.cornerRadius = 8
+      v.layer.masksToBounds = true
+      v.backgroundColor = .white
+      UIView.animate(withDuration: 0.5, animations: {
+       v.transform = CGAffineTransform(translationX: 50, y: 0)
+      }) { _ in
+        v.removeFromSuperview()
+      }
+      
+    }
+    if node?.directions.contains(.left) ?? false {
+      let v = UIView()
+      self.sv(v)
+      v.centerHorizontally().centerVertically().height(16).width(16)
+      v.layer.cornerRadius = 8
+      v.layer.masksToBounds = true
+      v.backgroundColor = .white
+      UIView.animate(withDuration: 0.5, animations: {
+        v.transform = CGAffineTransform(translationX: -50, y: 0)
+      }) { _ in
+        v.removeFromSuperview()
+      }
+    }
   }
   
 }

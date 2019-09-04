@@ -18,10 +18,18 @@ struct NodeIndex {
   }
 }
 
+enum Direction {
+  case up
+  case down
+  case right
+  case left
+}
+
 class Node {
   var threshold: Int
   var index: NodeIndex
   var currentValue: Int = 0
+  var directions: Array<Direction> = []
   var adjacencyList: Array<Node> = []
   
   init(x: Int, y: Int) {

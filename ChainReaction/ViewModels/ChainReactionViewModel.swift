@@ -91,15 +91,19 @@ class ChainReactionViewModel {
         }
         if (top != nil) {
           matrix[x][y].adjacencyList.append(top!)
+          matrix[x][y].directions.append(.up)
         }
         if (bottom != nil) {
           matrix[x][y].adjacencyList.append(bottom!)
+          matrix[x][y].directions.append(.down)
         }
         if (right != nil) {
           matrix[x][y].adjacencyList.append(right!)
+          matrix[x][y].directions.append(.right)
         }
         if (left != nil) {
           matrix[x][y].adjacencyList.append(left!)
+          matrix[x][y].directions.append(.left)
         }
       }
     }
