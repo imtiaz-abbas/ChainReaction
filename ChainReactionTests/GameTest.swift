@@ -72,6 +72,62 @@ class GameTest: XCTestCase {
     
   }
   
+  func testGameBoardNodeExplosionDirections() {
+    
+    let sizeX = 4
+    let sizeY = 4
+    let gameBuilder = GameBuilder().with(size: Gameboard(x: sizeX, y: sizeY))
+      .addPlayer(withName: "Player1", color: .red)
+      .addPlayer(withName: "Player2", color: .yellow)
+    let game = gameBuilder.build()
+    
+    game.start()
+    
+    for x in 0...sizeX-1 {
+      for y in 0...sizeY-1 {
+        let gameNodeIndex = GameNodeIndex(x: x, y: y)
+        var directions: Array<Direction> = []
+        
+        if (x > 0 && y > 0 && x < sizeX - 1 && y < sizeY - 1) {
+          directions.append(.up)
+          directions.append(.down)
+          directions.append(.left)
+          directions.append(.right)
+        } else if (x == 0 && y != 0 && y != sizeY - 1) {
+          directions.append(.down)
+          directions.append(.right)
+          directions.append(.left)
+        } else if (y == 0 && x != 0 && x != sizeX - 1) {
+          directions.append(.up)
+          directions.append(.down)
+          directions.append(.right)
+        } else if(x == sizeX - 1 && y != 0 && y != sizeY - 1) {
+          directions.append(.up)
+          directions.append(.right)
+          directions.append(.left)
+        } else if(y == sizeY - 1 && x != 0 && x != sizeX - 1) {
+          directions.append(.up)
+          directions.append(.down)
+          directions.append(.left)
+        } else if (x == 0 && y == 0) {
+          directions.append(.down)
+          directions.append(.right)
+        } else if (x == sizeX - 1 && y == sizeY - 1) {
+          directions.append(.up)
+          directions.append(.left)
+        } else if (x == sizeX - 1 && y == 0) {
+          directions.append(.up)
+          directions.append(.right)
+        } else if (x == 0 && y == sizeY - 1) {
+          directions.append(.down)
+          directions.append(.left)
+        }
+        
+        XCTAssertEqual(directions, game.gameNodes[gameNodeIndex]?.directions)
+      }
+    }
+  }
+  
   func testPerformanceExample() {
     // This is an example of a performance test case.
     self.measure {

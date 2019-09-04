@@ -85,58 +85,64 @@ class Game {
     
     for x in 0...maxX-1 {
       for y in 0...maxY-1 {
-        var top: GameNode? = nil
-        var bottom: GameNode? = nil
-        var right: GameNode? = nil
-        var left: GameNode? = nil
+        let gameNodeIndex = GameNodeIndex(x: x, y: y)
+        
+        let top = GameNode(x: x - 1, y: y)
+        let bottom = GameNode(x: x + 1, y: y)
+        let right = GameNode(x: x, y: y + 1)
+        let left = GameNode(x: x, y: y - 1)
+        
+        var directions: Array<Direction> = []
+        
         if (x > 0 && y > 0 && x < maxX - 1 && y < maxY - 1) {
-          top = GameNode(x: x - 1, y: y)
-          bottom = GameNode(x: x + 1, y: y)
-          right = GameNode(x: x, y: y + 1)
-          left = GameNode(x: x, y: y - 1)
+          directions.append(.up)
+          directions.append(.down)
+          directions.append(.left)
+          directions.append(.right)
         } else if (x == 0 && y != 0 && y != maxY - 1) {
-          bottom = GameNode(x: x + 1, y: y)
-          right = GameNode(x: x, y: y + 1)
-          left = GameNode(x: x, y: y - 1)
+          directions.append(.down)
+          directions.append(.right)
+          directions.append(.left)
         } else if (y == 0 && x != 0 && x != maxX - 1) {
-          top = GameNode(x: x - 1, y: y)
-          bottom = GameNode(x: x + 1, y: y)
-          right = GameNode(x: x, y: y + 1)
+          directions.append(.up)
+          directions.append(.down)
+          directions.append(.right)
         } else if(x == maxX - 1 && y != 0 && y != maxY - 1) {
-          top = GameNode(x: x - 1, y: y)
-          right = GameNode(x: x, y: y + 1)
-          left = GameNode(x: x, y: y - 1)
+          directions.append(.up)
+          directions.append(.right)
+          directions.append(.left)
         } else if(y == maxY - 1 && x != 0 && x != maxX - 1) {
-          top = GameNode(x: x - 1, y: y)
-          bottom = GameNode(x: x + 1, y: y)
-          left = GameNode(x: x, y: y - 1)
+          directions.append(.up)
+          directions.append(.down)
+          directions.append(.left)
         } else if (x == 0 && y == 0) {
-          bottom = GameNode(x: x + 1, y: y)
-          right = GameNode(x: x, y: y + 1)
+          directions.append(.down)
+          directions.append(.right)
         } else if (x == maxX - 1 && y == maxY - 1) {
-          top = GameNode(x: x - 1, y: y)
-          left = GameNode(x: x, y: y - 1)
+          directions.append(.up)
+          directions.append(.left)
         } else if (x == maxX - 1 && y == 0) {
-          top = GameNode(x: x - 1, y: y)
-          right = GameNode(x: x, y: y + 1)
+          directions.append(.up)
+          directions.append(.right)
         } else if (x == 0 && y == maxY - 1) {
-          bottom = GameNode(x: x + 1, y: y)
-          left = GameNode(x: x, y: y - 1)
+          directions.append(.down)
+          directions.append(.left)
         }
         var nodeList: NodeList = []
-        if (top != nil) {
-          nodeList.append(top!)
+        if (directions.contains(.up)) {
+          nodeList.append(top)
         }
-        if (bottom != nil) {
-          nodeList.append(bottom!)
+        if directions.contains(.down) {
+          nodeList.append(bottom)
         }
-        if (right != nil) {
-          nodeList.append(right!)
+        if directions.contains(.right) {
+          nodeList.append(right)
         }
-        if (left != nil) {
-          nodeList.append(left!)
+        if directions.contains(.left) {
+          nodeList.append(left)
         }
-        gameNodeGraph[GameNodeIndex(x: x, y: y)] = nodeList
+        gameNodes[gameNodeIndex] = gameNodes[gameNodeIndex]?.with(directions: directions)
+        gameNodeGraph[gameNodeIndex] = nodeList
       }
     }
   }
