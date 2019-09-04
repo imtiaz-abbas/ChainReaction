@@ -9,10 +9,30 @@
 import Foundation
 
 
+struct NodeQueue {
+  var nodes:[Node] = []
+  
+  mutating func enqueue(element: Node) {
+    nodes.append(element)
+  }
+  
+  mutating func dequeue() -> Node? {
+    if nodes.isEmpty {
+      return nil
+    }
+    else{
+      let tempElement = nodes.first
+      nodes.remove(at: 0)
+      return tempElement
+    }
+  }
+}
+
 class ChainReactionViewModel {
   var matrix: Array<Array<Node>> = []
   var maxX: Int = 5
   var maxY: Int = 5
+  var explosionQueue: NodeQueue = NodeQueue()
   
   init(x: Int, y: Int) {
     maxX = x
@@ -25,7 +45,7 @@ class ChainReactionViewModel {
   }
   
   func userSelected(x: Int, y: Int) {
-    matrix[x][y].addOne()
+    matrix[x][y].addOne(queue: &explosionQueue)
   }
   
   private func constructAdjacencyList() {
@@ -89,7 +109,7 @@ class ChainReactionViewModel {
     for i in 0...maxX {
       var temp: Array<Node> = []
       for j in 0...maxY {
-        var n = Node(x: i, y: j)
+        let n = Node(x: i, y: j)
         if ((i == 0 && j == 0) || (i == 0 && j == maxY - 1) || (i == maxX - 1 && j == 0) || (i == maxX - 1 && j == maxY - 1)) {
           n.threshold = 1
         } else if (i == 0 || j == 0 || i == maxX - 1 || j == maxY - 1) {

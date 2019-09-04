@@ -59,7 +59,7 @@ class GridCollectionView: UIView, UICollectionViewDataSource, UICollectionViewDe
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GridCollectionView", for: indexPath) as! GridItemCollectionViewCell
-    cell.setupView(node: chainReactionViewModel?.matrix[Int(indexPath.row / y)][indexPath.row % y])
+    cell.setupView(node: chainReactionViewModel?.matrix[Int(indexPath.row / y)][indexPath.row % y], chainReactionViewModel: chainReactionViewModel)
     return cell
   }
   
@@ -77,6 +77,7 @@ class GridItemCollectionViewCell: UICollectionViewCell {
   
   var node: Node?
   var lab = UILabel()
+  var chainReactionViewModel: ChainReactionViewModel?
   override init(frame: CGRect) {
     super.init(frame: frame)
   }
@@ -85,8 +86,9 @@ class GridItemCollectionViewCell: UICollectionViewCell {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func setupView(node: Node?) {
+  func setupView(node: Node?, chainReactionViewModel: ChainReactionViewModel?) {
     self.node = node
+    self.chainReactionViewModel = chainReactionViewModel
     self.layer.borderColor = UIColor.white.cgColor
     self.layer.borderWidth = 1
     self.backgroundColor = .black
@@ -99,13 +101,7 @@ class GridItemCollectionViewCell: UICollectionViewCell {
   }
   
   func didSelect() {
-//    let v = UIView()
-//    self.sv(v)
-//    v.height(26).width(26).centerVertically().centerHorizontally()
-//    v.layer.cornerRadius = 13
-//    v.layer.masksToBounds = true
-//    v.backgroundColor = .yellow
-    node?.addOne()
+    chainReactionViewModel?.userSelected(x: node!.index.x, y: node!.index.y)
     lab.text = "\(node!.currentValue)"
   }
   

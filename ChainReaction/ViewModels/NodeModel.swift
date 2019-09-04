@@ -9,7 +9,7 @@
 import Foundation
 
 
-class NodeIndex {
+struct NodeIndex {
   var x: Int = 0
   var y: Int = 0
   init(x: Int, y: Int) {
@@ -29,16 +29,17 @@ class Node {
     self.index = NodeIndex(x: x, y: y)
   }
   
-  func handleThresholdReached() {
+  func handleThresholdReached( queue: inout NodeQueue) {
     currentValue = 0
+    queue.enqueue(element: self)
     for i in adjacencyList {
-      i.addOne()
+      i.addOne(queue: &queue)
     }
   }
   
-  func addOne() {
+  func addOne(queue: inout NodeQueue) {
     if currentValue == threshold {
-      handleThresholdReached()
+      handleThresholdReached(queue: &queue)
     } else {
       currentValue += 1
     }
