@@ -16,7 +16,7 @@ class GameLoop {
     self.chainReactionViewModel = chainReactionViewModel
   }
   func start(onDequeue: @escaping (Int, Int) -> Void) -> Void {
-    timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { _ in
+    timer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true, block: { _ in
       if let n = self.chainReactionViewModel?.explosionQueue.dequeue() {
         onDequeue(n.index.x, n.index.y)
       }

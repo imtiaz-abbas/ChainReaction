@@ -103,6 +103,8 @@ class GridItemCollectionViewCell: UICollectionViewCell {
     lab.textAlignment = .center
     lab.centerVertically().centerHorizontally()
     lab.textColor = .white
+    
+    self.layer.zPosition = 50
   }
   
   func didSelect() {
