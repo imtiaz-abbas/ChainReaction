@@ -106,12 +106,13 @@ class GridItemCollectionViewCell: UICollectionViewCell {
   }
   
   func didSelect() {
-    chainReactionViewModel?.userSelected(x: node!.index.x, y: node!.index.y)
-    lab.text = "\(node!.currentValue)"
+    if chainReactionViewModel!.explosionQueue.isEmpty() {
+      chainReactionViewModel?.userSelected(x: node!.index.x, y: node!.index.y)
+      lab.text = "\(node!.currentValue)"
+    }
   }
   
   func explode() {
-    print("========== exploding x: \(node?.index.x) y: \(node?.index.y)")
     if node?.directions.contains(.up) ?? false {
       let v = UIView()
       self.sv(v)
@@ -119,7 +120,7 @@ class GridItemCollectionViewCell: UICollectionViewCell {
       v.layer.cornerRadius = 8
       v.layer.masksToBounds = true
       v.backgroundColor = .white
-      UIView.animate(withDuration: 0.5, animations: {
+      UIView.animate(withDuration: 0.7, animations: {
         v.transform = CGAffineTransform(translationX: 0, y: -50)
       }) { _ in
         v.removeFromSuperview()
@@ -134,7 +135,7 @@ class GridItemCollectionViewCell: UICollectionViewCell {
       v.layer.masksToBounds = true
       v.backgroundColor = .white
       
-      UIView.animate(withDuration: 0.5, animations: {
+      UIView.animate(withDuration: 0.7, animations: {
         v.transform = CGAffineTransform(translationX: 0, y: 50)
       }) { _ in
         v.removeFromSuperview()
@@ -147,7 +148,7 @@ class GridItemCollectionViewCell: UICollectionViewCell {
       v.layer.cornerRadius = 8
       v.layer.masksToBounds = true
       v.backgroundColor = .white
-      UIView.animate(withDuration: 0.5, animations: {
+      UIView.animate(withDuration: 0.7, animations: {
        v.transform = CGAffineTransform(translationX: 50, y: 0)
       }) { _ in
         v.removeFromSuperview()
@@ -161,7 +162,7 @@ class GridItemCollectionViewCell: UICollectionViewCell {
       v.layer.cornerRadius = 8
       v.layer.masksToBounds = true
       v.backgroundColor = .white
-      UIView.animate(withDuration: 0.5, animations: {
+      UIView.animate(withDuration: 0.7, animations: {
         v.transform = CGAffineTransform(translationX: -50, y: 0)
       }) { _ in
         v.removeFromSuperview()

@@ -26,6 +26,10 @@ struct NodeQueue {
       return tempElement
     }
   }
+  
+  func isEmpty() -> Bool {
+    return nodes.isEmpty
+  }
 }
 
 class ChainReactionViewModel {
