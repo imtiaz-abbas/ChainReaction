@@ -13,14 +13,17 @@ import UIKit
 class GameView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
   var collectionView: UICollectionView!
   let screenSize = UIScreen.main.bounds
+  
   var chainReactionViewModel: ChainReactionViewModel? = nil
   var gameLoop: GameLoop?
+  
   let x = 15
   let y = 8
   
   func setupView() {
     chainReactionViewModel = ChainReactionViewModel(x: x, y: y)
     chainReactionViewModel?.startGame()
+    
     gameLoop = GameLoop(chainReactionViewModel: chainReactionViewModel)
     gameLoop?.start { (i, j) in
       let c = self.collectionView.cellForItem(at: IndexPath(row: i * self.y + j, section: 0)) as! GridItemCollectionViewCell
@@ -108,10 +111,8 @@ class GridItemCollectionViewCell: UICollectionViewCell {
   }
   
   func didSelect() {
-    if chainReactionViewModel!.explosionQueue.isEmpty() {
-      chainReactionViewModel?.userSelected(x: node!.index.x, y: node!.index.y)
-      lab.text = "\(node!.currentValue)"
-    }
+    chainReactionViewModel?.userSelected(x: node!.index.x, y: node!.index.y)
+    lab.text = "\(node!.currentValue)"
   }
   
   func explode() {
