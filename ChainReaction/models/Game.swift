@@ -13,6 +13,18 @@ typealias NodeList = Array<GameNode>
 typealias Gameboard = GameNodeIndex
 typealias PlayerID = Int
 
+
+enum GameOperation {
+  case tap(playerId: PlayerID, node: GameNode)
+  case undo
+  case redo
+}
+
+enum GameState {
+  case waitingForPlayer(playerId: PlayerID)
+  case performingPlayerOperation(playerId: PlayerID)
+}
+
 class GameBuilder {
   var game = Game()
   
@@ -34,17 +46,6 @@ class GameBuilder {
     game.currentPlayer = game.players.first?.value.playerId ?? 0
     return self.game
   }
-}
-
-enum GameOperation {
-  case tap(playerId: PlayerID, node: GameNode)
-  case undo
-  case redo
-}
-
-enum GameState {
-  case waitingForPlayer(playerId: PlayerID)
-  case performingPlayerOperation(playerId: PlayerID)
 }
 
 class Game {
@@ -164,7 +165,7 @@ class Game {
       }
     }
   }
-
+  
 }
 
 

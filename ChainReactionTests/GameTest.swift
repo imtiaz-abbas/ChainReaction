@@ -119,6 +119,29 @@ class GameTest: XCTestCase {
     XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 1)]?.currentValue, 0)
   }
   
+  func testCenterNodeTapAction() {
+    let sizeX = 4
+    let sizeY = 4
+    let gameBuilder = GameBuilder().with(size: Gameboard(x: sizeX, y: sizeY))
+      .addPlayer(withName: "Player1", color: .red)
+      .addPlayer(withName: "Player2", color: .yellow)
+    let game = gameBuilder.build()
+    
+    game.start()
+    
+    game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 1, y: 1)]!))
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 1, y: 1)]?.currentValue, 1)
+    
+    game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 1, y: 1)]!))
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 1, y: 1)]?.currentValue, 2)
+    
+    game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 1, y: 1)]!))
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 1, y: 1)]?.currentValue, 3)
+    
+    game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 1, y: 1)]!))
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 1, y: 1)]?.currentValue, 0)
+  }
+  
   func testGameBoardNodeExplosionDirections() {
     
     let sizeX = 4
