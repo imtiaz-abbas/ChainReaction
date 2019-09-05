@@ -51,6 +51,8 @@ class GameBuilder {
 class Game {
   var board: Gameboard = GameNodeIndex(x: 4, y: 4)
   var gameNodes: [GameNodeIndex: GameNode] = [:]
+  var prevGameNodes: [GameNodeIndex: GameNode] = [:]
+  var redoGameNodes: [GameNodeIndex: GameNode] = [:]
   var gameNodeGraph: [GameNodeIndex: NodeList] = [:]
   var state: GameState?
   
@@ -174,7 +176,7 @@ class Game {
 extension Game {
   
   private func tapAction(playerId: Int, node: GameNode) -> Void {
-    
+    prevGameNodes = gameNodes
     var nodeQueue: GameNodeQueue = GameNodeQueue()
     nodeQueue.enqueue(element: node)
     
@@ -198,11 +200,19 @@ extension Game {
   }
   
   private func undoAction() {
-    // todo undo
+    if !prevGameNodes.isEmpty {
+      redoGameNodes = gameNodes
+      gameNodes = prevGameNodes
+      prevGameNodes = [:]
+    }
   }
   
   private func redoAction() {
-    // todo redo
+    if !redoGameNodes.isEmpty {
+      prevGameNodes = gameNodes
+      gameNodes = redoGameNodes
+      redoGameNodes = [:]
+    }
   }
 }
 
