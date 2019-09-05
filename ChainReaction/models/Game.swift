@@ -60,31 +60,23 @@ class Game {
   }
   
   func start() {
-    print("PLAYER ID IS", currentPlayer)
+    // todo
   }
   
   func end() {
-    
+    // todo
   }
   
   func handleGameOperation(operation: GameOperation) -> Void {
     switch operation {
-    case .tap(let playerId, var node):
-      if node.currentValue == node.threshold {
-        var nodeWithPlayer = node.with(playerId: 0)
-        gameNodes[GameNodeIndex(x: node.x, y: node.y)] = nodeWithPlayer.with(currentValue: 0)
-      } else {
-        var nodeWithPlayer = node.with(playerId: playerId)
-        gameNodes[GameNodeIndex(x: node.x, y: node.y)] = nodeWithPlayer.with(currentValue: node.currentValue + 1)
-      }
-      break
+    case .tap(let playerId, let node):
+      tapAction(playerId: playerId, node: node)
     case .undo:
-      break
+      undoAction()
     case .redo:
-      break
+      redoAction()
     }
   }
-  
   
   fileprivate func constructAdjacencyNodes() {
     let maxX = board.x
@@ -171,5 +163,31 @@ class Game {
         gameNodes[GameNodeIndex(x: i, y: j)] = gameNode.with(threshold: t)
       }
     }
+  }
+
+}
+
+
+
+// GameOperation action methods
+extension Game {
+  
+  private func tapAction(playerId: Int, node: GameNode) -> Void {
+    var mutableNode = node
+    if mutableNode.currentValue == mutableNode.threshold {
+      var nodeWithPlayer = mutableNode.with(playerId: 0)
+      gameNodes[GameNodeIndex(x: mutableNode.x, y: mutableNode.y)] = nodeWithPlayer.with(currentValue: 0)
+    } else {
+      var nodeWithPlayer = mutableNode.with(playerId: playerId)
+      gameNodes[GameNodeIndex(x: mutableNode.x, y: mutableNode.y)] = nodeWithPlayer.with(currentValue: mutableNode.currentValue + 1)
+    }
+  }
+  
+  private func undoAction() {
+    // todo undo
+  }
+  
+  private func redoAction() {
+    // todo redo
   }
 }
