@@ -183,7 +183,7 @@ extension Game {
     while !nodeQueue.isEmpty() {
       if let dequeuedNode = nodeQueue.dequeue() {
         let nodeIndex = GameNodeIndex(x: dequeuedNode.x, y: dequeuedNode.y)
-        if dequeuedNode.currentValue == dequeuedNode.threshold {
+        if gameNodes[nodeIndex]?.currentValue == gameNodes[nodeIndex]?.threshold {
           gameNodes[nodeIndex]?.currentValue = 0
           gameNodes[nodeIndex]?.playerId = 0
           gameNodeGraph[nodeIndex]?.forEach({ adjacentNode in

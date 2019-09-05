@@ -80,6 +80,9 @@ class GameView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UI
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let cell = collectionView.cellForItem(at: indexPath) as! GridItemCollectionViewCell
     cell.didSelect()
+    let gameNodeIndex = GameNodeIndex(x: Int(indexPath.row / y), y: indexPath.row % y)
+    game?.handleGameOperation(operation: .tap(playerId: game!.currentPlayer, node: game!.gameNodes[gameNodeIndex]!))
+//    cell.didSelect()
     Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { _ in
       collectionView.reloadData()
     }
