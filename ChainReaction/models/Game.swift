@@ -54,6 +54,7 @@ class Game {
   var prevGameNodes: [GameNodeIndex: GameNode] = [:]
   var redoGameNodes: [GameNodeIndex: GameNode] = [:]
   var gameNodeGraph: [GameNodeIndex: NodeList] = [:]
+  var explosionQueue: GameNodeQueue = GameNodeQueue()
   var state: GameState?
   
   var players: [PlayerID: Player] = [:]
@@ -176,14 +177,18 @@ class Game {
 extension Game {
   
   private func tapAction(playerId: Int, node: GameNode) -> Void {
-    prevGameNodes = gameNodes
     var nodeQueue: GameNodeQueue = GameNodeQueue()
+    
+    self.prevGameNodes = gameNodes
+    self.state = .performingPlayerOperation(playerId: playerId)
+    
     nodeQueue.enqueue(element: node)
     
     while !nodeQueue.isEmpty() {
       if let dequeuedNode = nodeQueue.dequeue() {
         let nodeIndex = GameNodeIndex(x: dequeuedNode.x, y: dequeuedNode.y)
         if gameNodes[nodeIndex]?.currentValue == gameNodes[nodeIndex]?.threshold {
+          explosionQueue.enqueue(element: dequeuedNode)
           gameNodes[nodeIndex]?.currentValue = 0
           gameNodes[nodeIndex]?.playerId = 0
           gameNodeGraph[nodeIndex]?.forEach({ adjacentNode in

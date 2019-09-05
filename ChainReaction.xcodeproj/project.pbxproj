@@ -10,8 +10,6 @@
 		04D715220AD516814FBDA530 /* Pods_ChainReaction.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00D6A7128B54694CB1D6BD8E /* Pods_ChainReaction.framework */; };
 		692D002E231F7F14004F92A8 /* GameLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692D002D231F7F14004F92A8 /* GameLoop.swift */; };
 		692D0031231FB616004F92A8 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692D0030231FB616004F92A8 /* Game.swift */; };
-		69C4F7F9231E942B008548F4 /* ChainReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C4F7F8231E942B008548F4 /* ChainReactionViewModel.swift */; };
-		69C4F7FB231E944F008548F4 /* NodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C4F7FA231E944F008548F4 /* NodeModel.swift */; };
 		69E15C52231FB71100178845 /* ChainReactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69E15C51231FB71100178845 /* ChainReactionTests.swift */; };
 		69E15C59231FB71600178845 /* GameTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69E15C49231FB6CA00178845 /* GameTest.swift */; };
 		69E15C5B231FBB5F00178845 /* GameNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69E15C5A231FBB5F00178845 /* GameNode.swift */; };
@@ -38,8 +36,6 @@
 		41DE8C461B274D30AE58D024 /* Pods-ChainReaction.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChainReaction.release.xcconfig"; path = "Target Support Files/Pods-ChainReaction/Pods-ChainReaction.release.xcconfig"; sourceTree = "<group>"; };
 		692D002D231F7F14004F92A8 /* GameLoop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLoop.swift; sourceTree = "<group>"; };
 		692D0030231FB616004F92A8 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
-		69C4F7F8231E942B008548F4 /* ChainReactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainReactionViewModel.swift; sourceTree = "<group>"; };
-		69C4F7FA231E944F008548F4 /* NodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeModel.swift; sourceTree = "<group>"; };
 		69E15C49231FB6CA00178845 /* GameTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTest.swift; sourceTree = "<group>"; };
 		69E15C4F231FB71100178845 /* ChainReactionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChainReactionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		69E15C51231FB71100178845 /* ChainReactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainReactionTests.swift; sourceTree = "<group>"; };
@@ -92,15 +88,6 @@
 			path = models;
 			sourceTree = "<group>";
 		};
-		69C4F7F7231E93FD008548F4 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				69C4F7F8231E942B008548F4 /* ChainReactionViewModel.swift */,
-				69C4F7FA231E944F008548F4 /* NodeModel.swift */,
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
 		69E15C50231FB71100178845 /* ChainReactionTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -144,7 +131,6 @@
 			children = (
 				69E15C5E2320DD5700178845 /* Extensions */,
 				692D002F231FB603004F92A8 /* models */,
-				69C4F7F7231E93FD008548F4 /* ViewModels */,
 				B28A23C0230C79B600D746B1 /* AppDelegate.swift */,
 				B28A23C7230C79B700D746B1 /* Assets.xcassets */,
 				B28A23CC230C79B700D746B1 /* Info.plist */,
@@ -322,10 +308,8 @@
 				B28A23C1230C79B600D746B1 /* AppDelegate.swift in Sources */,
 				692D0031231FB616004F92A8 /* Game.swift in Sources */,
 				69E15C5B231FBB5F00178845 /* GameNode.swift in Sources */,
-				69C4F7FB231E944F008548F4 /* NodeModel.swift in Sources */,
 				69E15C602320DD6900178845 /* Any+Extensions.swift in Sources */,
 				B27C9D53230C7C95003D3752 /* GameView.swift in Sources */,
-				69C4F7F9231E942B008548F4 /* ChainReactionViewModel.swift in Sources */,
 				692D002E231F7F14004F92A8 /* GameLoop.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

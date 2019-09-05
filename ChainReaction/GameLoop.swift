@@ -10,15 +10,15 @@ import Foundation
 
 class GameLoop {
   var timer: Timer?
-  var chainReactionViewModel: ChainReactionViewModel?
+  var game: Game?
   
-  init(chainReactionViewModel: ChainReactionViewModel?) {
-    self.chainReactionViewModel = chainReactionViewModel
+  init(game: Game?) {
+    self.game = game
   }
-  func start(onDequeue: @escaping (Int, Int) -> Void) -> Void {
+  func start(onDequeue: @escaping (GameNode) -> Void) -> Void {
     timer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true, block: { _ in
-      if let n = self.chainReactionViewModel?.explosionQueue.dequeue() {
-        onDequeue(n.index.x, n.index.y)
+      if let n = self.game?.explosionQueue.dequeue() {
+        onDequeue(n)
       }
     })
   }

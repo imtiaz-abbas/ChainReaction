@@ -10,6 +10,14 @@ import Foundation
 import UIKit
 
 typealias Directions = Array<Direction>
+
+enum Direction {
+  case up
+  case down
+  case right
+  case left
+}
+
 struct Player {
   var name: String
   var color: UIColor
