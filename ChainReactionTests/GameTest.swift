@@ -130,10 +130,46 @@ class GameTest: XCTestCase {
     XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 1, y: 0)]?.currentValue, 0)
     XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 1)]?.currentValue, 0)
     
-    game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 0, y: 0)]!))
+    let _ = game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 0, y: 0)]!))
     XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 0)]?.currentValue, 0)
     XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 1, y: 0)]?.currentValue, 1)
     XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 1)]?.currentValue, 1)
+    
+  }
+  
+  
+  func testChainExplostions() {
+    
+    let sizeX = 6
+    let sizeY = 6
+    let gameBuilder = GameBuilder().with(size: Gameboard(x: sizeX, y: sizeY))
+      .addPlayer(withName: "Player1", color: .red)
+      .addPlayer(withName: "Player2", color: .yellow)
+    let game = gameBuilder.build()
+    
+    game.start()
+    _ = game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 0, y: 0)]!))
+    _ = game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 1, y: 0)]!))
+    _ = game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 1, y: 0)]!))
+    _ = game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 2, y: 0)]!))
+    _ = game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 2, y: 0)]!))
+    _ = game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 0, y: 1)]!))
+    _ = game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 0, y: 1)]!))
+    _ = game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 0, y: 2)]!))
+    _ = game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 0, y: 2)]!))
+    _ = game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 1, y: 2)]!))
+    _ = game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 1, y: 2)]!))
+    _ = game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 1, y: 2)]!))
+    _ = game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 1, y: 3)]!))
+    _ = game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 1, y: 3)]!))
+    _ = game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 1, y: 3)]!))
+    _ = game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 1, y: 4)]!))
+    _ = game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 1, y: 4)]!))
+    _ = game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 1, y: 4)]!))
+    
+    _ = game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 0, y: 0)]!))
+    
+    
     
   }
   
@@ -259,6 +295,23 @@ class GameTest: XCTestCase {
         XCTAssertEqual(directions, game.gameNodes[gameNodeIndex]?.directions)
       }
     }
+  }
+  
+  func testSomething() {
+    var arrToReturn: Array<NodeList> = []
+    if arrToReturn.count < 0 {
+      arrToReturn[0] = [GameNode(x: 0, y: 0), GameNode(x: 0, y: 1)]
+    } else {
+      arrToReturn.insert([GameNode(x: 0, y: 0), GameNode(x: 0, y: 1)], at: 0)
+    }
+    
+    if arrToReturn.count < 0 {
+      arrToReturn[0] = [GameNode(x: 0, y: 0), GameNode(x: 0, y: 1)]
+    } else {
+      arrToReturn.insert(arrToReturn[0] + [GameNode(x: 0, y: 0), GameNode(x: 0, y: 1)], at: 0)
+    }
+    
+    print("arr to return \(arrToReturn)")
   }
   
   func testPerformanceExample() {

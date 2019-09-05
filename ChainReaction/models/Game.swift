@@ -20,6 +20,11 @@ enum GameOperation {
   case redo
 }
 
+enum GameOperationResult {
+  case tapResult(treeLevelList: Array<NodeList>?)
+  case none
+}
+
 enum GameState {
   case waitingForPlayer(playerId: PlayerID)
   case performingPlayerOperation(playerId: PlayerID)
@@ -54,7 +59,7 @@ class Game {
   var prevGameNodes: [GameNodeIndex: GameNode] = [:]
   var redoGameNodes: [GameNodeIndex: GameNode] = [:]
   var gameNodeGraph: [GameNodeIndex: NodeList] = [:]
-  var explosionQueue: GameNodeQueue = GameNodeQueue()
+  var explosionQueue: GameNodeQueue = GameNodeQueue<NodeList>()
   var state: GameState?
   
   var players: [PlayerID: Player] = [:]
@@ -71,14 +76,22 @@ class Game {
     // todo
   }
   
-  func handleGameOperation(operation: GameOperation) -> Void {
+  func handleGameOperation(operation: GameOperation) -> GameOperationResult {
     switch operation {
     case .tap(let playerId, let node):
-      tapAction(playerId: playerId, node: node)
+      let treeLevelList = tapAction(playerId: playerId, node: node)
+      
+      treeLevelList?.enumerated().forEach({ (index, val) in
+        explosionQueue.enqueue(element: val)
+      })
+      
+      return .tapResult(treeLevelList: treeLevelList)
     case .undo:
       undoAction()
+      return .none
     case .redo:
       redoAction()
+      return .none
     }
   }
   
@@ -172,27 +185,56 @@ class Game {
 }
 
 
+class TreeNode {
+  var node: GameNode = GameNode(x: 0, y: 0)
+  var parent: TreeNode?
+  var children: [TreeNode] = []
+}
+
+struct GameNodeWithParent {
+  var node: GameNode
+  var parent: TreeNode?
+}
+
+struct TreeNodeWithLevel {
+  var node: TreeNode
+  var level: Int
+}
+
+
 
 // GameOperation action methods
 extension Game {
   
-  private func tapAction(playerId: Int, node: GameNode) -> Void {
-    var nodeQueue: GameNodeQueue = GameNodeQueue()
+  private func tapAction(playerId: Int, node: GameNode) -> Array<NodeList>? {
+    var nodeQueue: GameNodeQueue = GameNodeQueue<GameNodeWithParent>()
     
     self.prevGameNodes = gameNodes
     self.state = .performingPlayerOperation(playerId: playerId)
-    
-    nodeQueue.enqueue(element: node)
-    
+    nodeQueue.enqueue(element: GameNodeWithParent(node: node, parent: nil))
+    var treeRoot : TreeNode?
     while !nodeQueue.isEmpty() {
       if let dequeuedNode = nodeQueue.dequeue() {
-        let nodeIndex = GameNodeIndex(x: dequeuedNode.x, y: dequeuedNode.y)
+        let nodeIndex = GameNodeIndex(x: dequeuedNode.node.x, y: dequeuedNode.node.y)
         if gameNodes[nodeIndex]?.currentValue == gameNodes[nodeIndex]?.threshold {
-          explosionQueue.enqueue(element: dequeuedNode)
+          var treeNode:TreeNode?
+          if(treeRoot == nil) {
+            treeRoot = TreeNode()
+            treeRoot?.node = dequeuedNode.node
+            treeRoot?.children = []
+            treeRoot?.parent = nil
+            treeNode = treeRoot
+          } else {
+            treeNode = TreeNode()
+            treeNode?.node = dequeuedNode.node
+            treeNode?.children = []
+            treeNode?.parent = dequeuedNode.parent
+            dequeuedNode.parent?.children.append(treeNode!)
+          }
           gameNodes[nodeIndex]?.currentValue = 0
           gameNodes[nodeIndex]?.playerId = 0
           gameNodeGraph[nodeIndex]?.forEach({ adjacentNode in
-            nodeQueue.enqueue(element: adjacentNode)
+            nodeQueue.enqueue(element: GameNodeWithParent(node: adjacentNode, parent: treeNode))
           })
         } else {
           if let gNode = gameNodes[nodeIndex] {
@@ -202,6 +244,34 @@ extension Game {
         }
       }
     }
+    if let treeR = treeRoot {
+      return walkTree(treeNode: treeR)
+    }
+    return []
+  }
+  
+  
+  func walkTree(treeNode: TreeNode) -> Array<NodeList> {
+    var queue = GameNodeQueue<TreeNodeWithLevel>()
+    var arrToReturn: Array<NodeList> = []
+    queue.enqueue(element: TreeNodeWithLevel(node: treeNode, level: 0))
+    while !queue.isEmpty() {
+      if let tNode = queue.dequeue() {
+//        print("Node: \(tNode.node.node.x) \(tNode.node.node.y) : Level \(tNode.level)")
+        
+        if arrToReturn.count <= tNode.level {
+          arrToReturn.insert([tNode.node.node], at: tNode.level)
+        } else {
+          var l = arrToReturn[tNode.level]
+          l.append(tNode.node.node)
+          arrToReturn[tNode.level] = l
+        }
+        tNode.node.children.forEach { (child) in
+          queue.enqueue(element: TreeNodeWithLevel(node: child, level: tNode.level + 1))
+        }
+      }
+    }
+    return arrToReturn
   }
   
   private func undoAction() {
@@ -221,16 +291,14 @@ extension Game {
   }
 }
 
-
-
-struct GameNodeQueue {
-  var nodes:[GameNode] = []
+struct GameNodeQueue<T> {
+  var nodes:[T] = []
   
-  mutating func enqueue(element: GameNode) {
+  mutating func enqueue(element: T) {
     nodes.append(element)
   }
   
-  mutating func dequeue() -> GameNode? {
+  mutating func dequeue() -> T? {
     if nodes.isEmpty {
       return nil
     }

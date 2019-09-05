@@ -16,9 +16,11 @@ class GameLoop {
     self.game = game
   }
   func start(onDequeue: @escaping (GameNode) -> Void) -> Void {
-    timer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true, block: { _ in
-      if let n = self.game?.explosionQueue.dequeue() {
-        onDequeue(n)
+    timer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true, block: { _ in
+      if let nodeList = self.game?.explosionQueue.dequeue() {
+        nodeList.forEach({ (node) in
+          onDequeue(node)
+        })
       }
     })
   }
