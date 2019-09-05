@@ -94,9 +94,14 @@ class GameTest: XCTestCase {
     game.start()
     game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 0, y: 0)]!))
     XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 0)]?.currentValue, 1)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 1, y: 0)]?.currentValue, 0)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 1)]?.currentValue, 0)
     
     game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 0, y: 0)]!))
     XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 0)]?.currentValue, 0)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 1, y: 0)]?.currentValue, 1)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 1)]?.currentValue, 1)
+    
   }
   
   func testEdgeNodeTapAction() {
@@ -111,12 +116,21 @@ class GameTest: XCTestCase {
     
     game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 0, y: 1)]!))
     XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 1)]?.currentValue, 1)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 0)]?.currentValue, 0)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 2)]?.currentValue, 0)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 1, y: 1)]?.currentValue, 0)
     
     game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 0, y: 1)]!))
     XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 1)]?.currentValue, 2)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 0)]?.currentValue, 0)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 2)]?.currentValue, 0)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 1, y: 1)]?.currentValue, 0)
     
     game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 0, y: 1)]!))
     XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 1)]?.currentValue, 0)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 0)]?.currentValue, 1)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 2)]?.currentValue, 1)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 1, y: 1)]?.currentValue, 1)
   }
   
   func testCenterNodeTapAction() {
@@ -131,15 +145,31 @@ class GameTest: XCTestCase {
     
     game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 1, y: 1)]!))
     XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 1, y: 1)]?.currentValue, 1)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 1)]?.currentValue, 0)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 1, y: 0)]?.currentValue, 0)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 2, y: 1)]?.currentValue, 0)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 1, y: 2)]?.currentValue, 0)
     
     game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 1, y: 1)]!))
     XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 1, y: 1)]?.currentValue, 2)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 1)]?.currentValue, 0)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 1, y: 0)]?.currentValue, 0)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 2, y: 1)]?.currentValue, 0)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 1, y: 2)]?.currentValue, 0)
     
     game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 1, y: 1)]!))
     XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 1, y: 1)]?.currentValue, 3)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 1)]?.currentValue, 0)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 1, y: 0)]?.currentValue, 0)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 2, y: 1)]?.currentValue, 0)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 1, y: 2)]?.currentValue, 0)
     
     game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 1, y: 1)]!))
     XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 1, y: 1)]?.currentValue, 0)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 1)]?.currentValue, 1)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 1, y: 0)]?.currentValue, 1)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 2, y: 1)]?.currentValue, 1)
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 1, y: 2)]?.currentValue, 1)
   }
   
   func testGameBoardNodeExplosionDirections() {

@@ -174,13 +174,26 @@ class Game {
 extension Game {
   
   private func tapAction(playerId: Int, node: GameNode) -> Void {
-    var mutableNode = node
-    if mutableNode.currentValue == mutableNode.threshold {
-      var nodeWithPlayer = mutableNode.with(playerId: 0)
-      gameNodes[GameNodeIndex(x: mutableNode.x, y: mutableNode.y)] = nodeWithPlayer.with(currentValue: 0)
-    } else {
-      var nodeWithPlayer = mutableNode.with(playerId: playerId)
-      gameNodes[GameNodeIndex(x: mutableNode.x, y: mutableNode.y)] = nodeWithPlayer.with(currentValue: mutableNode.currentValue + 1)
+    
+    var nodeQueue: GameNodeQueue = GameNodeQueue()
+    nodeQueue.enqueue(element: node)
+    
+    while !nodeQueue.isEmpty() {
+      if let dequeuedNode = nodeQueue.dequeue() {
+        let nodeIndex = GameNodeIndex(x: dequeuedNode.x, y: dequeuedNode.y)
+        if dequeuedNode.currentValue == dequeuedNode.threshold {
+          gameNodes[nodeIndex]?.currentValue = 0
+          gameNodes[nodeIndex]?.playerId = 0
+          gameNodeGraph[nodeIndex]?.forEach({ adjacentNode in
+            nodeQueue.enqueue(element: adjacentNode)
+          })
+        } else {
+          if let gNode = gameNodes[nodeIndex] {
+            gameNodes[nodeIndex]!.currentValue = gNode.currentValue + 1
+            gameNodes[nodeIndex]!.playerId = playerId
+          }
+        }
+      }
     }
   }
   
@@ -190,5 +203,30 @@ extension Game {
   
   private func redoAction() {
     // todo redo
+  }
+}
+
+
+
+struct GameNodeQueue {
+  var nodes:[GameNode] = []
+  
+  mutating func enqueue(element: GameNode) {
+    nodes.append(element)
+  }
+  
+  mutating func dequeue() -> GameNode? {
+    if nodes.isEmpty {
+      return nil
+    }
+    else{
+      let tempElement = nodes.first
+      nodes.remove(at: 0)
+      return tempElement
+    }
+  }
+  
+  func isEmpty() -> Bool {
+    return nodes.isEmpty
   }
 }
