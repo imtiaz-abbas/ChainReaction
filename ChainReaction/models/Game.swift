@@ -68,14 +68,21 @@ class Game {
   }
   
   func handleGameOperation(operation: GameOperation) -> Void {
-//    switch operation {
-//    case .tap(var playerId, var node):
-//      break
-//    case .undo:
-//      break
-//    case .redo:
-//      break
-//    }
+    switch operation {
+    case .tap(let playerId, var node):
+      if node.currentValue == node.threshold {
+        var nodeWithPlayer = node.with(playerId: 0)
+        gameNodes[GameNodeIndex(x: node.x, y: node.y)] = nodeWithPlayer.with(currentValue: 0)
+      } else {
+        var nodeWithPlayer = node.with(playerId: playerId)
+        gameNodes[GameNodeIndex(x: node.x, y: node.y)] = nodeWithPlayer.with(currentValue: node.currentValue + 1)
+      }
+      break
+    case .undo:
+      break
+    case .redo:
+      break
+    }
   }
   
   

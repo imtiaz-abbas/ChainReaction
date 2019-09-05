@@ -47,6 +47,11 @@ struct GameNode {
     directions = []
   }
   
+  mutating func with(currentValue: Int) -> GameNode {
+    self.currentValue = currentValue
+    return self
+  }
+  
   mutating func with(threshold: Int) -> GameNode {
     self.threshold = threshold
     return self

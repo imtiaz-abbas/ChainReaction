@@ -81,7 +81,39 @@ class GameTest: XCTestCase {
     let game = gameBuilder.build()
     
     game.start()
+  }
+  
+  func testCornerNodeTapAction() {
+    let sizeX = 4
+    let sizeY = 4
+    let gameBuilder = GameBuilder().with(size: Gameboard(x: sizeX, y: sizeY))
+      .addPlayer(withName: "Player1", color: .red)
+      .addPlayer(withName: "Player2", color: .yellow)
+    let game = gameBuilder.build()
     
+    game.start()
+    game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 0, y: 0)]!))
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 0)]?.currentValue, 1)
+    
+    game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 0, y: 0)]!))
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 0)]?.currentValue, 0)
+  }
+  
+  
+  func testCornerNodeTapAdjacencyAction() {
+    let sizeX = 4
+    let sizeY = 4
+    let gameBuilder = GameBuilder().with(size: Gameboard(x: sizeX, y: sizeY))
+      .addPlayer(withName: "Player1", color: .red)
+      .addPlayer(withName: "Player2", color: .yellow)
+    let game = gameBuilder.build()
+    
+    game.start()
+    game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 0, y: 0)]!))
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 0)]?.currentValue, 1)
+    
+    game.handleGameOperation(operation: .tap(playerId: game.currentPlayer, node: game.gameNodes[GameNodeIndex(x: 0, y: 0)]!))
+    XCTAssertEqual(game.gameNodes[GameNodeIndex(x: 0, y: 0)]?.currentValue, 0)
   }
   
   func testGameBoardNodeExplosionDirections() {
