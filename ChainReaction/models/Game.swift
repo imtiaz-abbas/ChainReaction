@@ -25,9 +25,10 @@ enum GameOperationResult {
   case none
 }
 
-enum GameState {
+enum GameState: Equatable {
+  case initial
   case waitingForPlayer(playerId: PlayerID)
-  case performingPlayerOperation(playerId: PlayerID)
+  case performingPlayerOperation
 }
 
 class GameBuilder {
@@ -60,7 +61,7 @@ class Game {
   var redoGameNodes: [GameNodeIndex: GameNode] = [:]
   var gameNodeGraph: [GameNodeIndex: NodeList] = [:]
   var explosionQueue: GameNodeQueue = GameNodeQueue<NodeList>()
-  var state: GameState?
+  var state: GameState = .initial
   
   var players: [PlayerID: Player] = [:]
   var currentPlayer: PlayerID = 0
@@ -79,12 +80,15 @@ class Game {
   func handleGameOperation(operation: GameOperation) -> GameOperationResult {
     switch operation {
     case .tap(let playerId, let node):
+      let selectedNode = gameNodes[GameNodeIndex(x: node.x, y: node.y)]!
+      if state == .performingPlayerOperation || (selectedNode.currentValue > 0 && selectedNode.playerId != playerId) {
+        return .none
+      }
       let treeLevelList = tapAction(playerId: playerId, node: node)
-      
       treeLevelList?.enumerated().forEach({ (index, val) in
         explosionQueue.enqueue(element: val)
       })
-      
+      self.checkPlayerOperationCompletion()
       return .tapResult(treeLevelList: treeLevelList)
     case .undo:
       undoAction()
@@ -92,6 +96,37 @@ class Game {
     case .redo:
       redoAction()
       return .none
+    }
+  }
+  
+  var playerOperationTimer: Timer?
+  func checkPlayerOperationCompletion() {
+    playerOperationTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { _ in
+      if self.explosionQueue.isEmpty() {
+        self.nextPlayer()
+        self.state = .waitingForPlayer(playerId: self.currentPlayer)
+        self.invalidatePlayerOperationTimer()
+      }
+    }
+  }
+  
+  func invalidatePlayerOperationTimer() {
+    playerOperationTimer?.invalidate()
+  }
+  
+  func nextPlayer() {
+    if self.currentPlayer == players.count - 1 {
+      self.currentPlayer = 0
+    } else {
+      self.currentPlayer += 1
+    }
+  }
+  
+  func prevPlayer() -> Void {
+    if self.currentPlayer == 0 {
+      self.currentPlayer = players.count - 1
+    } else {
+      self.currentPlayer -= 1
     }
   }
   
@@ -210,7 +245,8 @@ extension Game {
     var nodeQueue: GameNodeQueue = GameNodeQueue<GameNodeWithParent>()
     
     self.prevGameNodes = gameNodes
-    self.state = .performingPlayerOperation(playerId: playerId)
+    self.state = .performingPlayerOperation
+    
     nodeQueue.enqueue(element: GameNodeWithParent(node: node, parent: nil))
     var treeRoot : TreeNode?
     while !nodeQueue.isEmpty() {
