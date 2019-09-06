@@ -50,7 +50,7 @@ struct GameNode {
     self.x = x
     self.y = y
     threshold = 0
-    playerId = 0
+    playerId = -1
     currentValue = 0
     directions = []
   }

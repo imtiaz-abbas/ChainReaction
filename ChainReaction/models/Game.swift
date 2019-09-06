@@ -268,7 +268,7 @@ extension Game {
             dequeuedNode.parent?.children.append(treeNode!)
           }
           gameNodes[nodeIndex]?.currentValue = 0
-          gameNodes[nodeIndex]?.playerId = 0
+          gameNodes[nodeIndex]?.playerId = -1
           gameNodeGraph[nodeIndex]?.forEach({ adjacentNode in
             nodeQueue.enqueue(element: GameNodeWithParent(node: adjacentNode, parent: treeNode))
           })

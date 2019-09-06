@@ -67,7 +67,10 @@ class GameView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UI
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GridCollectionView", for: indexPath) as! GridItemCollectionViewCell
-    cell.setupView(node: game?.gameNodes[GameNodeIndex(x: Int(indexPath.row / y), y: indexPath.row % y)])
+    let nodeIndex = GameNodeIndex(x: Int(indexPath.row / y), y: indexPath.row % y)
+    let currentNode = game?.gameNodes[nodeIndex]
+    let playerId = currentNode!.playerId
+    cell.setupView(node: currentNode, player: game!.players[playerId])
     return cell
   }
   
@@ -95,7 +98,7 @@ class GridItemCollectionViewCell: UICollectionViewCell {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func setupView(node: GameNode?) {
+  func setupView(node: GameNode?, player: Player?) {
     self.node = node
     self.layer.borderColor = UIColor.white.cgColor
     self.layer.borderWidth = 1
@@ -105,7 +108,7 @@ class GridItemCollectionViewCell: UICollectionViewCell {
     lab.text = "\(node!.currentValue)"
     lab.textAlignment = .center
     lab.centerVertically().centerHorizontally()
-    lab.textColor = .white
+    lab.textColor = player?.color
   }
   
   func didSelect() {
