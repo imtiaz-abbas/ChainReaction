@@ -13,6 +13,7 @@ import UIKit
 class GameView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
   var collectionView: UICollectionView!
   let screenSize = UIScreen.main.bounds
+  var numOfPlayers: Int = 0
   
   var gameBuilder = GameBuilder()
   var game: Game?
@@ -20,9 +21,17 @@ class GameView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UI
   
   let x = 14
   let y = 8
+  var colors: [UIColor] = [.red, .green, .blue, .yellow, .white, .orange]
   
-  func setupView() {
-    let game = gameBuilder.with(size: Gameboard(x: self.x, y: self.y)).addPlayer(withName: "Player1", color: .red).addPlayer(withName: "Player2", color: .yellow).build()
+  func setupView(numOfPlayers: Int) {
+    
+    self.numOfPlayers = numOfPlayers
+    gameBuilder = gameBuilder.with(size: Gameboard(x: self.x, y: self.y))
+    for i in 1...numOfPlayers {
+      gameBuilder = gameBuilder.addPlayer(withName: "Player\(i)", color: colors[i - 1])
+    }
+    
+    let game = gameBuilder.build()
     self.game = game
     game.start()
     gameLoop = GameLoop(game: game)

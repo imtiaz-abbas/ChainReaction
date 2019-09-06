@@ -31,6 +31,22 @@ enum GameState: Equatable {
   case performingPlayerOperation
 }
 
+struct GameNodeWithParent {
+  var node: GameNode
+  var parent: TreeNode?
+}
+
+struct TreeNodeWithLevel {
+  var node: TreeNode
+  var level: Int
+}
+
+class TreeNode {
+  var node: GameNode = GameNode(x: 0, y: 0)
+  var parent: TreeNode?
+  var children: [TreeNode] = []
+}
+
 class GameBuilder {
   var game = Game()
   
@@ -81,6 +97,7 @@ class Game {
     switch operation {
     case .tap(let playerId, let node):
       let selectedNode = gameNodes[GameNodeIndex(x: node.x, y: node.y)]!
+      // return if animation is in progress or if the tap is on other players node
       if state == .performingPlayerOperation || (selectedNode.currentValue > 0 && selectedNode.playerId != playerId) {
         return .none
       }
@@ -88,7 +105,7 @@ class Game {
       treeLevelList?.enumerated().forEach({ (index, val) in
         explosionQueue.enqueue(element: val)
       })
-      self.checkPlayerOperationCompletion()
+      self.observePlayerOperation()
       return .tapResult(treeLevelList: treeLevelList)
     case .undo:
       undoAction()
@@ -100,7 +117,7 @@ class Game {
   }
   
   var playerOperationTimer: Timer?
-  func checkPlayerOperationCompletion() {
+  func observePlayerOperation() {
     playerOperationTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { _ in
       if self.explosionQueue.isEmpty() {
         self.nextPlayer()
@@ -218,25 +235,6 @@ class Game {
   }
   
 }
-
-
-class TreeNode {
-  var node: GameNode = GameNode(x: 0, y: 0)
-  var parent: TreeNode?
-  var children: [TreeNode] = []
-}
-
-struct GameNodeWithParent {
-  var node: GameNode
-  var parent: TreeNode?
-}
-
-struct TreeNodeWithLevel {
-  var node: TreeNode
-  var level: Int
-}
-
-
 
 // GameOperation action methods
 extension Game {

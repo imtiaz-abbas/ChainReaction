@@ -1,6 +1,6 @@
 //
-//  ViewController.swift
-//  HomeScreenVC
+//  GameViewController.swift
+//  GameViewController
 //
 //  Created by imtiaz abbas on 21/08/19.
 //  Copyright © 2019 imtiaz abbas. All rights reserved.
@@ -9,16 +9,20 @@
 import Stevia
 import UIKit
 
-class HomeScreenVC: UIViewController {
+class GameViewController: UIViewController {
 
   var gameView = GameView()
   var buttonsView = UIView()
+  var numOfPlayers: Int = 0
   
-  override func viewDidLoad() {
-    super.viewDidLoad()
+  func setNumOfPlayers(players: Int) {
+    numOfPlayers = players
+  }
+  
+  func setupView(players: Int) {
     self.view.backgroundColor = .white
     self.view.sv(gameView, buttonsView)
-    gameView.setupView()
+    gameView.setupView(numOfPlayers: players)
     gameView.fillHorizontally()
     gameView.Top == self.view.Top
     gameView.Bottom == self.view.Bottom - 80
@@ -43,7 +47,11 @@ class HomeScreenVC: UIViewController {
     redoButton.centerVertically()
     redoButton.text("REDO")
     redoButton.addTarget(self, action: #selector(redoAction), for: .touchUpInside)
-    
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    self.setupView(players: numOfPlayers)
   }
   
   @objc func undoAction(sender: UIButton!) {

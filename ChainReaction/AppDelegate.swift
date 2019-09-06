@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Override point for customization after application launch.
     
     self.window = UIWindow(frame: UIScreen.main.bounds)
-    self.navigationController = UINavigationController(rootViewController: HomeScreenVC())
+    self.navigationController = UINavigationController(rootViewController: HomeViewController())
     self.navigationController?.isNavigationBarHidden = true
     self.window?.rootViewController = navigationController
     self.window?.makeKeyAndVisible()
