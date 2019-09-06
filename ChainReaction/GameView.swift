@@ -18,7 +18,7 @@ class GameView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UI
   var game: Game?
   var gameLoop: GameLoop?
   
-  let x = 15
+  let x = 14
   let y = 8
   
   func setupView() {
@@ -46,6 +46,10 @@ class GameView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UI
     self.collectionView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
     self.collectionView.allowsSelection = true
     
+  }
+  
+  func reloadData() {
+    self.collectionView.reloadData()
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -89,6 +93,7 @@ class GameView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UI
 class GridItemCollectionViewCell: UICollectionViewCell {
   
   var node: GameNode?
+  var player: Player?
   var lab = UILabel()
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -100,6 +105,7 @@ class GridItemCollectionViewCell: UICollectionViewCell {
   
   func setupView(node: GameNode?, player: Player?) {
     self.node = node
+    self.player = player
     self.layer.borderColor = UIColor.white.cgColor
     self.layer.borderWidth = 1
     self.backgroundColor = .black
@@ -122,7 +128,7 @@ class GridItemCollectionViewCell: UICollectionViewCell {
       v.centerHorizontally().centerVertically().height(16).width(16)
       v.layer.cornerRadius = 8
       v.layer.masksToBounds = true
-      v.backgroundColor = .white
+      v.backgroundColor = self.player?.color
       UIView.animate(withDuration: 0.7, animations: {
         v.transform = CGAffineTransform(translationX: 0, y: -50)
       }) { _ in
@@ -136,7 +142,7 @@ class GridItemCollectionViewCell: UICollectionViewCell {
       v.centerHorizontally().centerVertically().height(16).width(16)
       v.layer.cornerRadius = 8
       v.layer.masksToBounds = true
-      v.backgroundColor = .white
+      v.backgroundColor = self.player?.color
 
       UIView.animate(withDuration: 0.7, animations: {
         v.transform = CGAffineTransform(translationX: 0, y: 50)
@@ -150,7 +156,7 @@ class GridItemCollectionViewCell: UICollectionViewCell {
       v.centerHorizontally().centerVertically().height(16).width(16)
       v.layer.cornerRadius = 8
       v.layer.masksToBounds = true
-      v.backgroundColor = .white
+      v.backgroundColor = self.player?.color
       UIView.animate(withDuration: 0.7, animations: {
        v.transform = CGAffineTransform(translationX: 50, y: 0)
       }) { _ in
@@ -164,7 +170,7 @@ class GridItemCollectionViewCell: UICollectionViewCell {
       v.centerHorizontally().centerVertically().height(16).width(16)
       v.layer.cornerRadius = 8
       v.layer.masksToBounds = true
-      v.backgroundColor = .white
+      v.backgroundColor = self.player?.color
       UIView.animate(withDuration: 0.7, animations: {
         v.transform = CGAffineTransform(translationX: -50, y: 0)
       }) { _ in

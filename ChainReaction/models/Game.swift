@@ -315,6 +315,7 @@ extension Game {
       redoGameNodes = gameNodes
       gameNodes = prevGameNodes
       prevGameNodes = [:]
+      prevPlayer()
     }
   }
   
@@ -323,6 +324,7 @@ extension Game {
       prevGameNodes = gameNodes
       gameNodes = redoGameNodes
       redoGameNodes = [:]
+      nextPlayer()
     }
   }
 }
